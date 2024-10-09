@@ -1,0 +1,55 @@
+# equivalence_relation.py
+
+class EquivalenceRelation:
+    def __init__(self, elements):
+        self.elements = elements
+        self.relation = self.generate_relation()
+
+    def is_even_difference(self, a, b):
+        """Check if the absolute difference is even."""
+        return abs(a - b) % 2 == 0
+
+    def generate_relation(self):
+        """Generate the equivalence relation based on the even difference."""
+        return {(a, b) for a in self.elements for b in self.elements if self.is_even_difference(a, b)}
+
+    def is_reflexive(self):
+        """Check if the relation is reflexive."""
+        return all((a, a) in self.relation for a in self.elements)
+
+    def is_symmetric(self):
+        """Check if the relation is symmetric."""
+        return all((b, a) in self.relation for (a, b) in self.relation)
+
+    def is_transitive(self):
+        """Check if the relation is transitive."""
+        for (a, b) in self.relation:
+            for (c, d) in self.relation:
+                if b == c and (a, d) not in self.relation:
+                    return False
+        return True
+
+    def check_equivalence_relation(self):
+        """Check if the relation is an equivalence relation."""
+        return self.is_reflexive() and self.is_symmetric() and self.is_transitive()
+
+    def display_relation(self):
+        """Display the generated relation."""
+        print("The relation R is:", self.relation)
+
+
+if __name__ == "__main__":
+    # Define the set A
+    A = {1, 2, 3, 4, 5}
+
+    # Create an equivalence relation instance
+    equivalence_relation = EquivalenceRelation(A)
+
+    # Check if R is an equivalence relation
+    if equivalence_relation.check_equivalence_relation():
+        print("R is an equivalence relation.")
+    else:
+        print("R is not an equivalence relation.")
+
+    # Display the relation R
+    equivalence_relation.display_relation()
